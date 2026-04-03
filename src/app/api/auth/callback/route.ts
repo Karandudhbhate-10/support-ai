@@ -1,7 +1,7 @@
 import { scalekit } from "@/lib/scalekit";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextResponse) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
   const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`;
@@ -13,10 +13,9 @@ export async function GET(req: NextResponse) {
   const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}`);
   response.cookies.set("access_token", session.accessToken, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
-  })
+  });
   return response;
-
 }
