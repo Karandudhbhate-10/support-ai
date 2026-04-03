@@ -5,6 +5,9 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
   const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`;
+  if (!redirectUrl) {
+    throw new Error("Missing NEXT_PUBLIC_APP_URL");
+  }
   if (!code) {
     return NextResponse.json({ error: "Code not found" }, { status: 400 });
   }
