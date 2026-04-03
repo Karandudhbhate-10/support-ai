@@ -9,7 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/genai": "^1.48.0",
+    "@scalekit-sdk/node": "^2.5.0",
+    "axios": "^1.14.0",
+    "framer-motion": "^12.38.0",
+    "mongoose": "^9.3.3",
+    "motion": "^12.38.0",
     "next": "16.2.1",
+    "openai": "^6.33.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },

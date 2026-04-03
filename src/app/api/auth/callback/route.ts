@@ -1,0 +1,22 @@
+import { scalekit } from "@/lib/scalekit";
+import { NextResponse } from "next/server";
+
+export async function GET(req: NextResponse) {
+  const { searchParams } = new URL(req.url);
+  const code = searchParams.get("code");
+  const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback`;
+  if (!code) {
+    return NextResponse.json({ error: "Code not found" }, { status: 400 });
+  }
+  const session = await scalekit.authenticateWithCode(code, redirectUrl);
+  console.log(session);
+  const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}`);
+  response.cookies.set("access_token", session.accessToken, {
+    httpOnly: true,
+    secure: false,
+    maxAge: 60 * 60 * 24 * 7,
+    path: "/",
+  })
+  return response;
+
+}
